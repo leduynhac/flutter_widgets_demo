@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widgets_demo/cache_network_image.dart';
+import 'package:flutter_widgets_demo/cards_demo.dart';
 import 'package:flutter_widgets_demo/circle_oval_drawer.dart';
+import 'package:flutter_widgets_demo/custom_clip_path.dart';
 import 'package:flutter_widgets_demo/shadow_drawer.dart';
 
 void main() {
@@ -33,5 +35,7 @@ class MyApp extends StatelessWidget {
 Widget _getHome(){
   //return CircleOvalDrawer();
   //return ShadowDrawer();
-  return CacheNetWorkImageDemo();
+  //return CacheNetWorkImageDemo();
+  //return CardsDemo();
+  return CustomClipPath();
 }
