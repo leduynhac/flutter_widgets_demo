@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//Refs:
+//https://flutter.dev/docs/cookbook/forms/validation
+
 //Steps:
 //1. Create a Form with a GlobalKey => done
 //2. Add a TextFormField with validation logic => done
