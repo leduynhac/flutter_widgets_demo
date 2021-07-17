@@ -14,6 +14,11 @@ import 'package:flutter/material.dart';
 //1. Supply an onChanged() callback to a TextField or TextFormField
 //2. Use a TextEditingController
 
+// https://flutter.dev/docs/cookbook/forms/focus
+// 1. Create a FocusNode
+// 2. Pass the FocusNode to Text form field
+// 3. Give focus to the Text form field when a button is tapped
+
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({ Key? key }) : super(key: key);
 
@@ -34,13 +39,20 @@ class _MyCustomFormState extends State<MyCustomForm> {
   // current value of the TextFormField
   final _myController = TextEditingController();
 
+  // Define the focus node. To manage the lifecycle, create the FocusNode in
+  // the initState method, and clean it up in the dispose method
+  late FocusNode _myFocusNode;
+
   @override
   void initState() {
     // Start listening to changes
     _myController.addListener(() { 
       print('Second text form field: ${_myController.text}');
     });
+
     super.initState();
+
+    _myFocusNode = FocusNode();
   }
 
   @override
@@ -48,6 +60,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
     // Clean up the controller when the widget is removed from the
     // widget tree.
     _myController.dispose();
+
+    // Clean up the focus node when the Form is disposed
+    _myFocusNode.dispose();
+
     super.dispose();
   }
 
@@ -78,6 +94,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
           createTextFormFieldWithOnChangedHandler(),
           SizedBox(height: 8,),
           createTextFormFieldWithTextEditingController(),
+          SizedBox(height: 8,),
+          createTextFormFieldFocusWhenVisible(),
+          SizedBox(height: 8,),
+          createTextFormFieldWithFocusNode(),
           SizedBox(height: 8,),
           createSubmitAndValidateButton(),
         ],
@@ -115,6 +135,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
           // you'd often call a server or save the information in a database.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
         }
+
+        // Give focus to the text field using _myFocusNode
+        _myFocusNode.requestFocus();
       }, 
       child: Text('Submit'));
   }
@@ -130,6 +153,21 @@ class _MyCustomFormState extends State<MyCustomForm> {
   Widget createTextFormFieldWithTextEditingController(){
     return TextFormField(
       controller: _myController,
+    );
+  }
+
+  Widget createTextFormFieldFocusWhenVisible(){
+    return TextFormField(
+      autofocus: true,
+    );
+  }
+
+  Widget createTextFormFieldWithFocusNode(){
+    return TextFormField(
+      focusNode: _myFocusNode,
+      decoration: InputDecoration(
+        hintText: 'Give focus to this textbox when Submit btn is tapped',
+      ),
     );
   }
 }
