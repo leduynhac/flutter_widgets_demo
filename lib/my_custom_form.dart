@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 
 //Refs:
 //https://flutter.dev/docs/cookbook/forms/validation
-//https://flutter.dev/docs/cookbook/forms/text-input
-
 //Steps:
 //1. Create a Form with a GlobalKey => done
 //2. Add a TextFormField with validation logic => done
 //3. Create a button to validate and submit the form
+
+//https://flutter.dev/docs/cookbook/forms/text-input
+
+//https://flutter.dev/docs/cookbook/forms/text-field-changes
+//02 ways to handle changes to a text field:
+//1. Supply an onChanged() callback to a TextField or TextFormField
+//2. Use a TextEditingController
 
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({ Key? key }) : super(key: key);
@@ -24,6 +29,27 @@ class _MyCustomFormState extends State<MyCustomForm> {
   //Note: This is a `GlobalKey<FormState>`
   //not a GlobalKey<MyCustomFormState>
   final _formKey = GlobalKey<FormState>();
+
+  // Create a text controller. Later, use it to retrieve the
+  // current value of the TextFormField
+  final _myController = TextEditingController();
+
+  @override
+  void initState() {
+    // Start listening to changes
+    _myController.addListener(() { 
+      print('Second text form field: ${_myController.text}');
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +74,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
           createTextFormField(),
           SizedBox(height: 8,),
           createTextFormFieldWithOutlineBorder(),
+          SizedBox(height: 8,),
+          createTextFormFieldWithOnChangedHandler(),
+          SizedBox(height: 8,),
+          createTextFormFieldWithTextEditingController(),
           SizedBox(height: 8,),
           createSubmitAndValidateButton(),
         ],
@@ -87,5 +117,19 @@ class _MyCustomFormState extends State<MyCustomForm> {
         }
       }, 
       child: Text('Submit'));
+  }
+
+  Widget createTextFormFieldWithOnChangedHandler(){
+    return TextFormField(
+      onChanged: (text){
+        print('First text form field: $text');
+      },
+    );
+  }
+
+  Widget createTextFormFieldWithTextEditingController(){
+    return TextFormField(
+      controller: _myController,
+    );
   }
 }
