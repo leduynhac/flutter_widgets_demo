@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //Refs:
 //https://flutter.dev/docs/cookbook/forms/validation
+//https://flutter.dev/docs/cookbook/forms/text-input
 
 //Steps:
 //1. Create a Form with a GlobalKey => done
@@ -31,7 +32,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
       appBar: AppBar(
         title: Text('Build a form with validation'),
       ),
-      body: createForm(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: createForm(),
+      ),
 
     );
   }
@@ -42,6 +46,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
       child: Column(
         children: <Widget>[
           createTextFormField(),
+          SizedBox(height: 8,),
+          createTextFormFieldWithOutlineBorder(),
+          SizedBox(height: 8,),
           createSubmitAndValidateButton(),
         ],
       ),
@@ -57,6 +64,15 @@ class _MyCustomFormState extends State<MyCustomForm> {
         }
         return null;
       },
+    );
+  }
+
+  Widget createTextFormFieldWithOutlineBorder(){
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Enter your username',
+      ),
     );
   }
 
