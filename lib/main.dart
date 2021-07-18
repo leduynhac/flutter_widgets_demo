@@ -6,6 +6,7 @@ import 'package:flutter_widgets_demo/custom_clip_path.dart';
 import 'package:flutter_widgets_demo/my_custom_form.dart';
 import 'package:flutter_widgets_demo/shadow_drawer.dart';
 
+import 'fetch_data_in_background_via_http.dart';
 import 'fetch_data_via_http.dart';
 
 void main() {
@@ -42,5 +43,6 @@ Widget _getHome(){
   //return CardsDemo();
   //return CustomClipPath();
   //return MyCustomForm();
-  return FetchDataViaHttp();
+  //return FetchDataViaHttp();
+  return FetchDataInBackgoundViaHttp();
 }
